@@ -9,6 +9,7 @@ from utils import *
 
 candidates = load_data('data')
 cs = ["", "", ""]
+rs = ["", "", ""]
 
 
 def show_member(pool: StringVar):
@@ -20,22 +21,35 @@ def show_member(pool: StringVar):
     return
 
 def draw(c1,c2,c3):
-    global cs
+    global cs, rs
+    seed = int(time.time())
+    np.random.seed(seed)
     _c = np.random.choice(candidates, size=1, replace=True)
+    idx = candidates.index(_c[0])
+    candidates.pop(idx)
+    
     if len(cs)<3:
         cs =  list(_c) + cs
+        rs = [seed] + rs
     else:
         cs.pop(-1)
         cs =  list(_c) + cs
+        rs = [seed] + rs
     
     c1.set(cs[0])
     c2.set(cs[1])
     c3.set(cs[2])
+
+    r1.set(rs[0])
+    r2.set(rs[1])
+    r3.set(rs[2])
     return 
 
 def draw2(winner):
+    seed = int(time.time())
+    np.random.seed(seed)
     _c = np.random.choice(cs, size=1)
-    winner.set(_c[0])
+    winner.set("{}  ({})".format(_c[0], seed))
     return
 
 
@@ -70,6 +84,10 @@ if __name__ == "__main__":
     c1 = StringVar(value="")
     c2 = StringVar(value="")
     c3 = StringVar(value="")
+
+    r1 = StringVar(value="")
+    r2 = StringVar(value="")
+    r3 = StringVar(value="")
 
 
     # First Draw Button
@@ -116,6 +134,36 @@ if __name__ == "__main__":
         bg='#e0c8d1'
     )
     c3label.place(x=340, y=10, width=100, height=50)
+
+    r1label = Label(
+        frame2, 
+        textvariable=r1,
+        font=8,
+        justify='center',
+        bg='#D7B98E'
+
+    )
+    r1label.place(x=60, y=65, width=100, height=30)
+
+    r2label = Label(
+        frame2, 
+        textvariable=r2,
+        font=8,
+        justify='center',
+        bg='#D7B98E'
+
+    )
+    r2label.place(x=200, y=65, width=100, height=30)
+
+    r3label = Label(
+        frame2, 
+        textvariable=r3,
+        font=8,
+        justify='center',
+        bg='#D7B98E'
+
+    )
+    r3label.place(x=340, y=65, width=100, height=30)
 
 
     # Second Draw Button
