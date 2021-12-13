@@ -22,7 +22,7 @@ def show_member(pool: StringVar):
 
 def draw(c1,c2,c3):
     global cs, rs
-    seed = int(time.time())
+    seed = int(time.time()*100 - 1.6*10e10) 
     np.random.seed(seed)
     _c = np.random.choice(candidates, size=1, replace=True)
     idx = candidates.index(_c[0])
@@ -46,11 +46,11 @@ def draw(c1,c2,c3):
     return 
 
 def draw2(winner):
-    seed = int(time.time())
+    seed = int(time.time() * 100 - 1.6*10e10) 
     np.random.seed(seed)
     _c = np.random.choice(cs, size=1)
-    winner.set("{}  ({})".format(_c[0], seed))
-    return
+    winner.set("{}  ({})".format(_c[0],seed))
+    return 
 
 
 if __name__ == "__main__":
